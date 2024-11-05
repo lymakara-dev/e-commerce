@@ -1,9 +1,21 @@
-<script setup>
-import { RouterView } from "vue-router";
+<!-- App.vue -->
+<template>
+  <div id="app">
+    <category />
+  </div>
+</template>
+
+<script>
+import category from "./components/category.vue";
+
+export default {
+  name: "App",
+  components: {
+    category,
+  },
+};
 </script>
 
-<template>
-  This is my first Vue.js project.
-
-  <RouterView />
-</template>
+<style>
+/* Global styles here */
+</style>
