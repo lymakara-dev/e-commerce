@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Button from "./components/Button.vue";
 import Category from "./components/Category.vue";
 import Promotion from "./components/Promotion.vue";
@@ -45,98 +46,39 @@ export default {
   },
   data() {
     return {
-      categories: [
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Burger & Fries",
-          itemCount: 10,
-          imageBgColor: "lightblue",
-          textBgColor: "#f4f4f4",
-        },
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Burger & Fries",
-          itemCount: 10,
-          imageBgColor: "lightblue",
-          textBgColor: "#f4f4f4",
-        },
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Pizza & More",
-          itemCount: 8,
-          imageBgColor: "lightgreen",
-          textBgColor: "#fff7e6",
-        },
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Pizza & More",
-          itemCount: 8,
-          imageBgColor: "lightgreen",
-          textBgColor: "#fff7e6",
-        },
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Pizza & More",
-          itemCount: 8,
-          imageBgColor: "lightgreen",
-          textBgColor: "#fff7e6",
-        },
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Pizza & More",
-          itemCount: 8,
-          imageBgColor: "lightgreen",
-          textBgColor: "#fff7e6",
-        },
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Pizza & More",
-          itemCount: 8,
-          imageBgColor: "lightgreen",
-          textBgColor: "#orange",
-        },
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Pizza & More",
-          itemCount: 8,
-          imageBgColor: "lightgreen",
-          textBgColor: "#orange",
-        },
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Pizza & More",
-          itemCount: 8,
-          imageBgColor: "lightgreen",
-          textBgColor: "#orange",
-        },
-        {
-          imageSrc: "./../../public/burger.png",
-          title: "Pizza & More",
-          itemCount: 8,
-          imageBgColor: "lightgreen",
-          textBgColor: "#orange",
-        },
-      ],
-      promotions: [
-        {
-          buttonLabel: "Shop Now ->",
-          buttonColor: "#3BB77E",
-        },
-        {
-          buttonLabel: "View Deals ->",
-          buttonColor: "#FF5733",
-        },
-        {
-          buttonLabel: "View Deals ->",
-          buttonColor: "#FF5733",
-        },
-      ],
+      categories: [],
+      promotions: [],
     };
   },
   methods: {
+    async fetchCategories() {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/categories"
+        );
+        this.categories = response.data;
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    },
+    async fetchPromotions() {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/promotions"
+        );
+        this.promotions = response.data;
+      } catch (error) {
+        console.error("Error fetching promotions:", error);
+      }
+    },
     primaryAction() {
       alert("Primary button clicked!");
     },
+  },
+  mounted() {
+    // Fetch categories and promotions when the component is loaded
+    this.fetchCategories();
+    this.fetchPromotions();
   },
 };
 </script>
