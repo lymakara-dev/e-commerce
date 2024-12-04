@@ -3,27 +3,20 @@
     <div class="parent-category">
       <div v-for="(category, index) in categories" :key="index">
         <Category
-          :imageSrc="category.imageSrc"
-          :title="category.title"
-          :itemCount="category.itemCount"
-          :imageBgColor="category.imageBgColor"
-          :textBgColor="category.textBgColor"
+          :imageSrc="category.image"
+          :title="category.name"
+          :itemCount="category.productCount"
+          :bgColor="category.color"
         />
       </div>
     </div>
     <br />
-    <div class="parent-promotion">
-      <div
-        class="child-promotion"
-        v-for="(promotion, index) in promotions"
-        :key="index"
-      >
-        <Promotion class="promotion" />
-        <Button
-          class="button"
-          :label="promotion.buttonLabel"
-          :color="promotion.buttonColor"
-          size="12px"
+    <div class="flex flex-row gap-4">
+      <div v-for="(promotion, index) in promotions" :key="index">
+        <Promotion
+          :image="promotion.image"
+          :title="promotion.title"
+          :buttonColor="promotion.buttonColor"
           :onClick="primaryAction"
         />
       </div>
@@ -57,6 +50,7 @@ export default {
           "http://localhost:3000/api/categories"
         );
         this.categories = response.data;
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -67,6 +61,7 @@ export default {
           "http://localhost:3000/api/promotions"
         );
         this.promotions = response.data;
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching promotions:", error);
       }
@@ -93,22 +88,5 @@ export default {
   display: flex;
   flex-direction: row;
   gap: 22px;
-}
-
-.parent-promotion {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-}
-
-.child-promotion {
-  position: relative;
-  margin-top: 20px;
-}
-
-.button {
-  position: absolute;
-  top: 190px;
-  left: 48px;
 }
 </style>

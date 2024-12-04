@@ -1,17 +1,40 @@
 <template>
-  <div class="container">
-    <div class="image">
-      <img src="./../../public/onion.jpeg" alt="Fresh Onion" />
+  <div class="child-promotion">
+    <div class="container">
+      <div class="image">
+        <img :src="'http://localhost:3000/' + image" alt="Promotion Image" />
+      </div>
+      <div class="text">
+        <h1 class="header">{{ title }}</h1>
+      </div>
     </div>
-    <div class="text">
-      <h1 class="header">Everyday Fresh & Clean with Our Products</h1>
+    <div class="button">
+      <Button
+        label="Shop Now"
+        :ButtonColor="buttonColor"
+        :onClick="onClickFunction"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import Button from "./Button.vue";
+
 export default {
   name: "Promotion",
+  components: { Button },
+  props: {
+    title: String,
+    image: String,
+    buttonColor: String,
+    onClick: Function,
+  },
+  methods: {
+    onClickFunction() {
+      this.onClick();
+    },
+  },
 };
 </script>
 
@@ -27,7 +50,6 @@ export default {
 
   position: relative;
 }
-
 .image {
   width: 100%;
   height: 100%;
@@ -35,20 +57,17 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
 .image img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   border-radius: 10px;
 }
-
 .text {
   background-color: orange;
   width: 100%;
   text-align: center;
 }
-
 .header {
   color: #253d4e;
   font-size: 24px;
@@ -59,5 +78,15 @@ export default {
   position: absolute;
   top: 75px;
   left: 48px;
+}
+.button {
+  position: absolute;
+  top: 190px;
+  left: 48px;
+}
+
+.child-promotion {
+  position: relative;
+  margin-top: 20px;
 }
 </style>

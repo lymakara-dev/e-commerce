@@ -1,23 +1,20 @@
 <template>
-  <button
-    :style="{ backgroundColor: color, fontSize: size }"
-    @click="handleClick"
-  >
+  <button :style="{ backgroundColor: ButtonColor }" @click="handleClick">
     {{ label }}
   </button>
 </template>
 
 <script>
 export default {
+  name: "Button",
   props: {
-    label: { type: String, default: "Click me" },
-    color: { type: String, default: "blue" },
-    size: { type: String, default: "16px" },
+    label: String,
+    ButtonColor: String,
     onClick: Function,
   },
   methods: {
     handleClick() {
-      if (this.onClick) this.onClick();
+      this.onClick();
     },
   },
 };

@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
-    <div class="image" :style="{ backgroundColor: imageBgColor }">
-      <img :src="imageSrc" alt="Category1" />
+  <div class="container" :style="{ backgroundColor: bgColor }">
+    <div class="image">
+      <img :src="'http://localhost:3000/' + imageSrc" alt="Category1" />
     </div>
-    <div class="text" :style="{ backgroundColor: textBgColor }">
+    <div class="text">
       <h1 class="header">{{ title }}</h1>
       <h1 class="paragraph">{{ itemCount }} items</h1>
     </div>
@@ -14,6 +14,7 @@
 export default {
   name: "Category",
   props: {
+    default: "./../../public/burger.png",
     imageSrc: {
       type: String,
       default: "./../../public/burger.png",
@@ -26,13 +27,9 @@ export default {
       type: Number,
       default: 14,
     },
-    imageBgColor: {
+    bgColor: {
       type: String,
       default: "red",
-    },
-    textBgColor: {
-      type: String,
-      default: "orange",
     },
   },
 };
@@ -52,7 +49,7 @@ export default {
 
 .image {
   width: 100%;
-  height: 100px; /* Set a fixed height for the image container */
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
