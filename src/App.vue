@@ -1,5 +1,9 @@
 <template>
   <div id="app" class="parent">
+    <!-- Menu Component -->
+    <MenuComponent features="Feature Categories" :groups="groups" />
+
+    <!-- Categories Section -->
     <div class="parent-category">
       <div v-for="(category, index) in categories" :key="index">
         <Category
@@ -11,69 +15,64 @@
       </div>
     </div>
     <br />
+
+    <!-- Promotions Section -->
     <div class="flex flex-row gap-4">
       <div v-for="(promotion, index) in promotions" :key="index">
         <Promotion
           :image="promotion.image"
           :title="promotion.title"
           :buttonColor="promotion.buttonColor"
-          :onClick="primaryAction"
+          @click="primaryAction"
         />
       </div>
+    </div>
+
+    <!-- Menu Component -->
+    <MenuComponent features="Popular Products" :groups="groups" />
+
+    <div>
+      <ProductComponent :products="products" />
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import Button from "./components/Button.vue";
+import { mapState } from "pinia";
+import { useProductStore } from "./stores/productStore"; // Import the Pinia store
 import Category from "./components/Category.vue";
 import Promotion from "./components/Promotion.vue";
+import MenuComponent from "./components/MenuComponent.vue";
+import ProductComponent from "./components/ProductComponent.vue";
 
 export default {
   name: "App",
   components: {
     Category,
     Promotion,
-    Button,
+    MenuComponent,
+    ProductComponent,
   },
-  data() {
-    return {
-      categories: [],
-      promotions: [],
-    };
+  computed: {
+    // Map state from the Pinia store
+    ...mapState(useProductStore, [
+      "categories",
+      "promotions",
+      "groups",
+      "products",
+    ]),
   },
+
   methods: {
-    async fetchCategories() {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/categories"
-        );
-        this.categories = response.data;
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    },
-    async fetchPromotions() {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/promotions"
-        );
-        this.promotions = response.data;
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching promotions:", error);
-      }
-    },
     primaryAction() {
       alert("Primary button clicked!");
     },
   },
   mounted() {
-    // Fetch categories and promotions when the component is loaded
-    this.fetchCategories();
-    this.fetchPromotions();
+    const productStore = useProductStore();
+
+    // Fetch data using store actions
+    productStore.fetchData();
   },
 };
 </script>
